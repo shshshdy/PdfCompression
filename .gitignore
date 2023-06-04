@@ -1,0 +1,12 @@
+.idea/*
+*.user
+*.suo
+**/.vs
+**/.gitee
+**/obj
+**/bin
+**/packages
+**/Build
+**/PublishProfiles
+*.DS_Store
+**/publish

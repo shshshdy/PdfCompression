@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="2.88.3" />
+    <PackageReference Include="bblanchon.PDFium.Linux" Version="112.0.5567" PrivateAssets="analyzers" />
+    <PackageReference Include="bblanchon.PDFium.macOS" Version="112.0.5567" PrivateAssets="analyzers" />
+    <PackageReference Include="bblanchon.PDFium.Win32" Version="112.0.5567" PrivateAssets="analyzers" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.3" PrivateAssets="analyzers" />
+    <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="2.88.3" PrivateAssets="analyzers" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="2.88.3" PrivateAssets="analyzers" />
+  </ItemGroup>
+
+</Project>

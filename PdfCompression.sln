@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfiumViewer", "PdfiumViewer\PdfiumViewer.csproj", "{920D3EC7-55F4-4C24-A982-9E82CADDB1A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfCompression", "PdfCompression\PdfCompression.csproj", "{7A6AAB21-3527-4EF6-AE41-3F7E8DC7E422}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{920D3EC7-55F4-4C24-A982-9E82CADDB1A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{920D3EC7-55F4-4C24-A982-9E82CADDB1A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{920D3EC7-55F4-4C24-A982-9E82CADDB1A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{920D3EC7-55F4-4C24-A982-9E82CADDB1A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A6AAB21-3527-4EF6-AE41-3F7E8DC7E422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A6AAB21-3527-4EF6-AE41-3F7E8DC7E422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A6AAB21-3527-4EF6-AE41-3F7E8DC7E422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A6AAB21-3527-4EF6-AE41-3F7E8DC7E422}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E68F41C8-FAFB-4110-A66B-93F6B74A71A3}
+	EndGlobalSection
+EndGlobal
