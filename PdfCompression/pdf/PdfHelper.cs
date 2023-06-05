@@ -12,17 +12,18 @@ namespace PdfCompression.pdf
 {
     public class PdfHelper
     {
+        public static int Quality { get; set; } = 40;
         #region 页面中的所有jpg图片压缩
-        public static void Convert(string path, string target, Action<float> callBack)
+        public static void Convert(Stream source, Stream target, Action<float> callBack)
         {
-            PdfDocument document = PdfReader.Open(path);
+            PdfDocument document = PdfReader.Open(source);
             document.Options.UseFlateDecoderForJpegImages = PdfUseFlateDecoderForJpegImages.Always;
             int imageCount = 0;
             // Iterate pages
             var pageCount = document.Pages.Count;
             for (var i = 0; i < pageCount; i++)
             {
-                callBack?.Invoke((i + 1)* 1f / pageCount);
+                callBack?.Invoke((i + 1) * 1f / pageCount);
                 var page = document.Pages[i];
                 //if (page.Width.Value > page.Height.Value)
                 //    page.Orientation = PdfSharpCore.PageOrientation.Portrait;
@@ -54,7 +55,8 @@ namespace PdfCompression.pdf
                 }
             }
 
-            document.Save(target);
+            document.Save(target, false);
+            target.Seek(0, SeekOrigin.Begin);
         }
 
         static void ExportImage(PdfDictionary image, ref int count)
@@ -81,7 +83,7 @@ namespace PdfCompression.pdf
                 var old = new MemoryStream(stream);
                 old.Seek(0, SeekOrigin.Begin);
                 int width = image.Elements.GetInteger(PdfImage.Keys.Width);
-                ImageHelper.Compress(old, newImage, width, 40);
+                ImageHelper.Compress(old, newImage, width, Quality);
                 image.Stream.Value = newImage.ToArray();
             }
 
@@ -106,18 +108,16 @@ namespace PdfCompression.pdf
         /// <summary>
         /// 整页存为图片压缩
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="source"></param>
         /// <param name="target"></param>
         /// <param name="callBack"></param>
-        public static void Convert2(string path, string target, Action<float> callBack)
+        public static void Convert2(Stream source, Stream target, bool loss, Action<float> callBack)
         {
-            var fileName = Path.GetFileName(path);
-            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (var pdf2image = new Pdf2Image(stream))
+            using (var pdf2image = new Pdf2Image(source))
             using (var newPdf = new PdfDocument())
             {
                 newPdf.Options.UseFlateDecoderForJpegImages = PdfUseFlateDecoderForJpegImages.Always;
-                PdfDocument document = PdfReader.Open(stream);
+                PdfDocument document = PdfReader.Open(source);
                 var pageCount = document.PageCount;
                 for (var i = 0; i < pageCount; i++)
                 {
@@ -131,7 +131,11 @@ namespace PdfCompression.pdf
                     using (var tStream = pdf2image.ToPng(i))
                     using (var outStream = new MemoryStream())
                     {
-                        ImageHelper.Compress2(tStream, outStream, (decimal)newPage.Width.Value, 40);
+                        if (loss)
+                            ImageHelper.Compress2(tStream, outStream, (decimal)newPage.Width.Value, Quality);
+                        else
+                            ImageHelper.Compress3(tStream, outStream, (decimal)newPage.Width.Value, Quality);
+
                         var img = XImage.FromStream(() => outStream);
                         var width = img.PointWidth;
                         var height = img.PointHeight;
@@ -145,7 +149,8 @@ namespace PdfCompression.pdf
                     }
                     //break;
                 }
-                newPdf.Save(target);
+                newPdf.Save(target, false);
+                target.Seek(0, SeekOrigin.Begin);
             }
         }
 
@@ -153,13 +158,13 @@ namespace PdfCompression.pdf
         /// <summary>
         /// 调整页面为A4尺寸大小
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="source"></param>
         /// <param name="target"></param>
         /// <param name="callBack"></param>
-        public static void Convert2A4(string path, string target, Action<float> callBack)
+        public static void Convert2A4(Stream source, Stream target, Action<float> callBack)
         {
             using (var newPdf = new PdfDocument())
-            using (XPdfForm form = XPdfForm.FromFile(path))
+            using (XPdfForm form = XPdfForm.FromStream(source))
             {
                 newPdf.Options.UseFlateDecoderForJpegImages = PdfUseFlateDecoderForJpegImages.Always;
                 var pageCount = form.PageCount;
@@ -195,7 +200,8 @@ namespace PdfCompression.pdf
                     gfx.Save();
                 }
 
-                newPdf.Save(target);
+                newPdf.Save(target, false);
+                target.Seek(0, SeekOrigin.Begin);
             }
         }
     }
