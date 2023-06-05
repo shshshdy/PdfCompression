@@ -16,6 +16,7 @@ namespace PdfCompression
 {
     public partial class MainWindow : Window
     {
+        const string Ext = ".pdf";
         MainWindowViewModel _vm;
         public MainWindow()
         {
@@ -43,6 +44,7 @@ namespace PdfCompression
         bool _compressing = false;
         private async Task CompressPdf(string pdf)
         {
+            if (Path.GetExtension(pdf).ToLower() != Ext) return;
             if (_compressing) return;
             _compressing = true;
             await Task.Run(() =>
@@ -51,7 +53,7 @@ namespace PdfCompression
                 _vm.Name = _fileName;
                 PdfHelper.Quality = _vm.Quality;
                 var outPdf = pdf.Replace(_fileName, string.Empty);
-                outPdf += _fileName.ToLower().Replace(".pdf", "") + ".new.pdf";
+                outPdf += _fileName.ToLower().Replace(Ext, "") + ".new" + Ext;
                 try
                 {
                     using (var source = new FileStream(pdf, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -80,7 +82,7 @@ namespace PdfCompression
                         else
                             outFile.Write(target.ToArray());
                     }
-                    
+
                 }
                 catch (IOException)
                 {
@@ -120,7 +122,7 @@ namespace PdfCompression
         }
         public async Task<string?> SlectFileAsync()
         {
-            var patterns = new string[] { "*.pdf" };
+            var patterns = new string[] { "*" + Ext };
 
             var dialog = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions { AllowMultiple = false, FileTypeFilter = new List<FilePickerFileType> { new FilePickerFileType("Ñ¡Ôñ") { Patterns = patterns } } });
             var path = dialog.FirstOrDefault()?.Path;
