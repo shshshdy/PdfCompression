@@ -11,8 +11,8 @@ namespace PdfCompression
             get => _name;
             set => this.RaiseAndSetIfChanged(ref _name, value);
         }
-        private int _quality = 40;
-        public int Quality
+        private int? _quality = 40;
+        public int? Quality
         {
             get => _quality;
             set => this.RaiseAndSetIfChanged(ref _quality, value);

@@ -51,7 +51,7 @@ namespace PdfCompression
             {
                 _fileName = Path.GetFileName(pdf);
                 _vm.Name = _fileName;
-                PdfHelper.Quality = _vm.Quality;
+                PdfHelper.Quality = _vm.Quality ?? 40;
                 var outPdf = pdf.Replace(_fileName, string.Empty);
                 outPdf += _fileName.ToLower().Replace(Ext, "") + ".new" + Ext;
                 try
@@ -60,17 +60,14 @@ namespace PdfCompression
                     using (var outFile = new FileStream(outPdf, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
                     using (var target = new MemoryStream())
                     {
-                        if (_vm.Loss)
-                        {
-                            PdfHelper.Convert(source, target, (per) => _ = UpdatePer(per));
-                            if (source.Length > target.Length)
-                            {
-                                outFile.Write(target.ToArray());
-                                return;
-                            }
-                            target.SetLength(0);
-                        }
                         PdfHelper.Convert2(source, target, _vm.Loss, (per) => _ = UpdatePer(per));
+
+                        if (_vm.Loss && target.Length > source.Length)
+                        {
+                            source.Seek(0, SeekOrigin.Begin);
+                            target.SetLength(0);
+                            PdfHelper.Convert(source, target, (per) => _ = UpdatePer(per));
+                        }
 
                         if (target.Length > source.Length)
                         {
@@ -80,7 +77,11 @@ namespace PdfCompression
                             outFile.Write(bytes);
                         }
                         else
+                        {
+                            target.Seek(0, SeekOrigin.Begin);
                             outFile.Write(target.ToArray());
+                        }
+
                     }
 
                 }

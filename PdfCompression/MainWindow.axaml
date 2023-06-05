@@ -10,13 +10,13 @@
         Icon="Assets/logo.ico"
         Title="PdfCompression">
 
-  <Grid DragDrop.AllowDrop="True" Name="fileContent" RowDefinitions="30,10,*" >
+  <Grid DragDrop.AllowDrop="True" RowDefinitions="30,10,*" >
     <StackPanel Orientation="Horizontal" Grid.Row="0" Spacing="10">
       <NumericUpDown Value="{Binding  Quality}" Minimum="1" Maximum="100" Increment="1" Width="120" Margin="5,2"></NumericUpDown>
       <ToggleSwitch IsChecked="{Binding Loss,Mode=TwoWay}" OffContent="有损" OnContent="无损" />
     </StackPanel>
     <ProgressBar Name="currentPer" Value="{Binding Per}" Grid.Row="1"></ProgressBar>
-    <Grid  Grid.Row="2">
+    <Grid  Grid.Row="2" Name="fileContent">
       <Image Source="Assets/add.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
       <TextBlock Text="{Binding Name}" MaxWidth="200" HorizontalAlignment="Center"></TextBlock>
     </Grid>
