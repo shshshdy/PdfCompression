@@ -1,4 +1,5 @@
 ﻿//using PhotoSauce.MagicScaler;
+using System;
 using System.IO;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
@@ -54,7 +55,17 @@ namespace PdfCompression.pdf
             using var image = Image.Load<Rgba32>(file);
             {
                 image.Mutate(x => x.Resize((int)maxWidth, 0));
-                image.SaveAsPng(target, new PngEncoder { CompressionLevel = PngCompressionLevel.Level4 });
+                var levl = PngCompressionLevel.DefaultCompression;
+                if(Enum.TryParse((quality / 10).ToString(),out PngCompressionLevel result))
+                {
+                    levl = result;
+                }
+                image.SaveAsPng(target, new PngEncoder
+                {
+                    CompressionLevel = levl,
+                    TransparentColorMode = PngTransparentColorMode.Clear,
+                    ColorType = PngColorType.Palette
+                });
             }
             target.Seek(0, SeekOrigin.Begin);
         }
