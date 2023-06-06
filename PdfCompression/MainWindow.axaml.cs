@@ -1,9 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Platform.Storage;
-using Avalonia.Rendering;
-using Avalonia.Threading;
-using DynamicData;
 using PdfCompression.pdf;
 using System;
 using System.Collections.Generic;

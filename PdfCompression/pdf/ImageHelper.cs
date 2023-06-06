@@ -1,5 +1,4 @@
-﻿//using PhotoSauce.MagicScaler;
-using System;
+﻿using System;
 using System.IO;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
