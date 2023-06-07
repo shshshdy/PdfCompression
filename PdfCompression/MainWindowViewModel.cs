@@ -29,7 +29,11 @@ namespace PdfCompression
         public bool Loss
         {
             get => _loss;
-            set => this.RaiseAndSetIfChanged(ref _loss, value);
+            set
+            {
+                Quality = value ? 40 : 80;
+                this.RaiseAndSetIfChanged(ref _loss, value);
+            }
         }
     }
 }
