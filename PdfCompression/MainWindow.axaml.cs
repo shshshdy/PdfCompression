@@ -84,11 +84,11 @@ namespace PdfCompression
                 }
                 catch (IOException)
                 {
-                    _vm.Name = "ÎÄ¼ş±»ÆäËü³ÌĞòÕ¼ÓÃ»ò´ÅÅÌ¿Õ¼ä²»×ã£¡";
+                    _vm.Name = "æ–‡ä»¶è¢«å…¶å®ƒç¨‹åºå ç”¨æˆ–ç£ç›˜ç©ºé—´ä¸è¶³ï¼";
                 }
                 catch (Exception ex)
                 {
-                    _vm.Name = "Ñ¹ËõÊ§°Ü£¡²Î¿¼ÌáÊ¾£º" + ex.Message;
+                    _vm.Name = "å‹ç¼©å¤±è´¥ï¼å‚è€ƒæç¤ºï¼š" + ex.Message;
                 }
                 finally
                 {
@@ -103,7 +103,7 @@ namespace PdfCompression
             _vm.Per = per * 100;
             if (_vm.Per >= 100)
             {
-                _vm.Name = _fileName + "£¬Ñ¹ËõÍê³É£¡";
+                _vm.Name = _fileName + "ï¼Œå‹ç¼©å®Œæˆï¼";
             }
             await Task.Delay(10);
         }
@@ -122,7 +122,7 @@ namespace PdfCompression
         {
             var patterns = new string[] { "*" + Ext };
 
-            var dialog = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions { AllowMultiple = false, FileTypeFilter = new List<FilePickerFileType> { new FilePickerFileType("Ñ¡Ôñ") { Patterns = patterns } } });
+            var dialog = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions { AllowMultiple = false, FileTypeFilter = new List<FilePickerFileType> { new FilePickerFileType("é€‰æ‹©") { Patterns = patterns } } });
             var path = dialog.FirstOrDefault()?.Path;
             return HttpUtility.UrlDecode(path?.AbsolutePath);
         }
